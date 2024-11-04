@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+    font-family: sentex;
+    src: url('/fonts/Sentex-Regular.ttf');
+}
+
+@font-face {
+    font-family: gilmer;
+    src: url('/fonts/Gilmer Medium.otf');   
+}
+
+
+
+.stroke-text {
+    -webkit-text-stroke: 2px #c4c3c3ab; /* Adjust the stroke width and color as needed */
+    color: transparent; /* Make the fill color transparent */
+  }
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+}
+
+.light-theme ::selection {
+    background: black;
+    color: white;
+}
+
+.dark-theme ::selection {
+    background: white;
+    color: black;
+}
+
+.text-stroke span {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .text-stroke span::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: transparent;
+    -webkit-text-stroke: inherit;
+    pointer-events: none;
+    transition: text-shadow 0.3s ease-in-out;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #252525; /* Dark background color */
+  }
+  
+  .light-theme {
+    background-color: #252525;
+  }
+  
+  .dark-theme {
+    background-color: #fefefe;
+  }
