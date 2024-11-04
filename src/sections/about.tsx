@@ -2,6 +2,9 @@ import useThemeStore from "../hooks/themeStore";
 import Nav from "../components/nav";
 import Block from "../components/block";
 import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { useRef } from "react";
 
 const About = () => {
   const { isDark, setTheme } = useThemeStore();
@@ -9,18 +12,52 @@ const About = () => {
     setTheme();
   }
   const navigate = useNavigate();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      gsap.fromTo(
+        ".heading",
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, delay: 0.3, duration: 0.8, ease: "power2.out" }
+      );
+
+      gsap.fromTo(
+        ".paragraph",
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, delay: 0.5, duration: 0.8, ease: "power2.out" }
+      );
+
+      gsap.fromTo(
+        ".introducing",
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, delay: 0.7, duration: 0.8, ease: "power2.out" }
+      );
+
+      gsap.fromTo(
+        ".split-text",
+        { y: 300 },
+        { y: 5, stagger: 0.1, delay: 1, ease: "power2.inOut" }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <div className="bg-[rgba(37,37,37,1)] text-white  w-full overflow-hidden max-md:overflow-y-scroll relative h-[100dvh]">
+    <div
+      ref={containerRef}
+      className="bg-[rgba(37,37,37,1)] text-white w-full overflow-hidden max-md:overflow-y-scroll relative h-[100dvh]"
+    >
       <Nav />
       <div className="flex max-xl:flex-col-reverse justify-between">
         <div className="xl:w-1/3 w-4/5 md:p-28 p-12 pb-8 xl:text-2xl h-full max-md:mt-16">
-          <h3 className="xl:mb-24 mb-12 xl:text-3xl  text-nowrap font-[gilmer]">
+          <h3 className="xl:mb-24 mb-12 xl:text-3xl text-nowrap font-[gilmer] heading">
             Where Imagination meets Innovation
           </h3>
-          <p className="mb-20 font-[gilmer] font-light text-[#C4C3C3]">
+          <p className="mb-20 font-[gilmer] font-light text-[#C4C3C3] paragraph">
             ARC Console brings immersive gaming experiences to life with
             cutting-edge technology and sleek design, redefining the boundaries
-            of interactive entertainment.{" "}
+            of interactive entertainment.
           </p>
 
           <svg
@@ -50,7 +87,7 @@ const About = () => {
             />
           </svg>
         </div>
-        <div className="flex flex-col items-end md:gap-40 gap-20 relative ">
+        <div className="flex flex-col items-end md:gap-40 gap-20 relative">
           <div className="max-xl:w-full flex justify-start">
             <img
               className="max-md:w-[35vw]"
@@ -62,14 +99,19 @@ const About = () => {
           </div>
 
           <div className="flex flex-col items-start md:absolute top-1/2 -translate-y-[45%]">
-            <span className="xl:text-6xl lg:text-4xl text-xl font-[gilmer] ml-4 md:ml-12">
-              introducing
-            </span>
-            <br />
-
-            <p className="xl:text-[27rem] lg:text-[16rem] text-9xl font-[gilmer] leading-3 md:leading-[0.2] ">
-              arc
-            </p>
+            <div className="flex overflow-clip">
+              <span className="xl:text-6xl lg:text-4xl text-xl font-[gilmer] absolute md:top-24 top-5 md:left-10 left-3 introducing">
+                introducing
+              </span>
+              {"arc".split("").map((letter, index) => (
+                <span
+                  className="inline-block xl:text-[27rem] lg:text-[16rem] text-9xl font-[gilmer] split-text"
+                  key={index}
+                >
+                  {letter}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
         <div className="absolute bottom-32 md:bottom-10 md:right-32 right-10">
